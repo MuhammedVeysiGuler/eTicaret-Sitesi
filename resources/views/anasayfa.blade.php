@@ -7,14 +7,9 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">Kategoriler</div>
                     <div class="list-group categories">
-                        <a href="#" class="list-group-item"><i class="fa fa-television"></i> Kategori</a>
-                        <a href="#" class="list-group-item"><i class="fa fa-television"></i> Kategori</a>
-                        <a href="#" class="list-group-item"><i class="fa fa-television"></i> Kategori</a>
-                        <a href="#" class="list-group-item"><i class="fa fa-television"></i> Kategori</a>
-                        <a href="#" class="list-group-item"><i class="fa fa-television"></i> Kategori</a>
-                        <a href="#" class="list-group-item"><i class="fa fa-television"></i> Kategori</a>
-                        <a href="#" class="list-group-item"><i class="fa fa-television"></i> Kategori</a>
-                        <a href="#" class="list-group-item"><i class="fa fa-television"></i> Kategori</a>
+                        @foreach($kategoriler as $kategori)
+                        <a href="{{route('kategori',$kategori->slug)}}" class="list-group-item"><i class="fa fa-television"></i>{{$kategori->kategori_adi}}</a>
+                        @endforeach
                     </div>
                 </div>
             </div>

@@ -7,11 +7,9 @@ use \App\Http\Controllers\SepetController;
 use \App\Http\Controllers\OdemeController;
 use \App\Http\Controllers\SiparisController;
 use \App\Http\Controllers\KullaniciController;
+use \App\Http\Controllers\AnasayfaController;
 
-
-Route::get('/', function () {
-    return view('anasayfa');
-});
+Route::get('/',[AnasayfaController::class,'index'])->name('anasayfa');
 
 Route::get('/kategori/{slug_kategoriadi}',[KategoriController::class,'index'])->name('kategori');
 
