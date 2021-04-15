@@ -15,6 +15,9 @@ Route::get('/kategori/{slug_kategoriadi}',[KategoriController::class,'index'])->
 
 Route::get('/urun/{slug_urunadi}',[UrunController::class,'index'])->name('urun');
 
+Route::post('ara',[UrunController::class,'ara'])->name('urun_ara');
+Route::get('ara',[UrunController::class,'ara'])->name('urun_ara');
+
 Route::get('/sepet',[SepetController::class,'index'])->name('sepet');
 
 Route::get('/odeme',[OdemeController::class,'index'])->name('odeme');

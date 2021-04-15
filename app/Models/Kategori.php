@@ -11,5 +11,10 @@ class Kategori extends Model
     use HasFactory;
     use SoftDeletes;
     protected $table = 'kategori';
-    protected $fillable =  ['kategori_adi','slug'];
+    protected $guarded =  [];
+
+    public function urunler(){
+        return $this->belongsToMany('App\Models\Urun','kategori_urun');
+    }
+
 }
