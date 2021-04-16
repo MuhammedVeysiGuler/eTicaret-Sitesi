@@ -28,6 +28,7 @@ Route::get('/siparisler/{id}',[SiparisController::class,'detay'])->name('siparis
 Route::group(['prefix'=>'kullanici'],function (){
     Route::get('/oturumac',[KullaniciController::class,'giris_form'])->name('kullanici.oturumac');
     Route::get('/kaydol',[KullaniciController::class,'kaydol_form'])->name('kullanici.kaydol');
+    Route::post('/kaydol',[KullaniciController::class,'kaydol'])->name('kullanici.kaydol');
 });
 
 
