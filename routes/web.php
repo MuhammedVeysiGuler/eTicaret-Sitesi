@@ -31,4 +31,8 @@ Route::group(['prefix'=>'kullanici'],function (){
     Route::post('/kaydol',[KullaniciController::class,'kaydol'])->name('kullanici.kaydol');
 });
 
+Route::get('/test/mail',function(){
+    $user = \App\Models\User::find(1);
+    return new App\Mail\KullaniciKayitMail($user );
+});
 

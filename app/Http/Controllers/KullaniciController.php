@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\KullaniciKayitMail;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 
 
@@ -25,7 +27,6 @@ class KullaniciController extends Controller
 
         ]);
 
-
         $kullanici = User::create([
             'adsoyad' => \request('adsoyad'),
             'email' => \request('email'),
@@ -33,6 +34,9 @@ class KullaniciController extends Controller
             'aktivasyon_anahtari' =>Str::random(60),
             'aktif_mi' => 0
         ]);
+
+        Mail::to(request('email'))->send(new KullaniciKayitMail($kullanici));  //1.parametre gönderilecek mail || cc() ile gönderilecek kişilere bcc() ile gizli olan mailler
+        //  2.parametredede bilgileri gönderiyorum
 
         auth()->login($kullanici);
         return redirect()->route('anasayfa');
