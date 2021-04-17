@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
+use function PHPUnit\Framework\isNull;
 
 
 class KullaniciController extends Controller
@@ -42,4 +43,24 @@ class KullaniciController extends Controller
         return redirect()->route('anasayfa');
 
     }
+
+    public function aktiflestir($anahtar){
+        $kullanici = User::where('aktivasyon_anahtari',$anahtar)->first();
+        if (!isNull($kullanici)){
+            $kullanici->aktivasyon_anahtari = null;
+            $kullanici->aktif_mi = 1;
+            $kullanici->save();
+            return redirect()->to('/')
+                ->with('mesaj','Kaydınız Aktifleştirildi')
+                ->with('mesaj_turu','success');
+        }
+        else{
+            return redirect()->to('/')
+                ->with('mesaj','Kullanıcı kaydınız aktifleştirilemedi')
+                ->with('mesaj_turu','warning');
+        }
+    }
+
+
+
 }

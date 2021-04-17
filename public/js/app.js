@@ -1842,6 +1842,10 @@ module.exports = {
 
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
+setTimeout(function () {
+  $('.alert').slideUp(500);
+}, 3000);
+
 /***/ }),
 
 /***/ "./resources/js/bootstrap.js":
