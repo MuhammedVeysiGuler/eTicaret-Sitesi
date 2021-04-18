@@ -13,6 +13,11 @@ use function PHPUnit\Framework\isNull;
 
 class KullaniciController extends Controller
 {
+    public function __construct()   //kullanıcı girişi yapmamış kişiler bu controllerdaki tüm fonsyonlara erişebilir
+    {
+        $this->middleware('guest')->except('oturumukapat');
+    }
+
     public function giris_form(){
         return view('kullanici.oturumac');
     }
@@ -59,6 +64,27 @@ class KullaniciController extends Controller
                 ->with('mesaj','Kullanıcı kaydınız aktifleştirilemedi')
                 ->with('mesaj_turu','warning');
         }
+    }
+
+    public function giris(){
+        $this->validate(\request(),[
+           'email' => 'required|email|',
+            'sifre' => 'required'
+        ]);
+        if (auth()->attempt(['email'=>\request('email'),'password'=>\request('sifre')],\request()->has('benihatirla'))){
+            \request()->session()->regenerate();
+            return redirect()->intended('/');
+        }else{
+            $errors = ['email'=>'Hatali Giris'];
+            return back()->withErrors($errors);
+        }
+    }
+
+    public function oturumukapat(){
+        auth()->logout();
+        \request()->session()->flush(); //sessiondaki bilgileri sıfırlamak için kullanılır
+        \request()->session()->regenerate();
+        return redirect()->route('anasayfa');
     }
 
 
