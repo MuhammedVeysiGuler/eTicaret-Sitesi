@@ -18,7 +18,12 @@ Route::get('/urun/{slug_urunadi}',[UrunController::class,'index'])->name('urun')
 Route::post('ara',[UrunController::class,'ara'])->name('urun_ara');
 Route::get('ara',[UrunController::class,'ara'])->name('urun_ara');
 
-Route::get('/sepet',[SepetController::class,'index'])->name('sepet');
+Route::group(['prefix'=>'sepet'],function (){
+    Route::get('/',[SepetController::class,'index'])->name('sepet');
+    Route::post('/ekle',[SepetController::class,'ekle'])->name('sepet.ekle');
+    Route::delete('/kaldir/{rowId}',[SepetController::class,'kaldir'])->name('sepet.kaldir');
+});
+
 
 Route::group(['middleware'=>'auth'],function (){ //sadece giriş yapmış kişilerin erişimine açık hael getirildi
     Route::get('/odeme',[OdemeController::class,'index'])->name('odeme');
