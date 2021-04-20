@@ -35,9 +35,9 @@
 
                             <td>{{$urunCartItem->price}}</td>
                             <td>
-                                <a href="#" class="btn btn-xs btn-default">-</a>
+                                <a href="#" class="btn btn-xs btn-default" id="urun-adet-azalt" data-id ="{{$urunCartItem->rowId}}" data-adet="{{$urunCartItem->qty-1}}">-</a>
                                 <span style="padding: 10px 20px">{{$urunCartItem->qty}}</span>
-                                <a href="#" class="btn btn-xs btn-default">+</a>
+                                <a href="#" class="btn btn-xs btn-default " id="urun-adet-artir" data-id ="{{$urunCartItem->rowId}}" data-adet="{{$urunCartItem->qty+1}}">+</a>
                             </td>
                             <td class="text-right">
                                 {{$urunCartItem->subtotal}}
@@ -57,7 +57,11 @@
                         <td class="text-right">{{Cart::total()}}</td>
                     </tr>
                 </table>
-                <a href="#" class="btn btn-info pull-left">Sepeti Boşalt</a>
+                <form action="{{route('sepet.bosalt')}}" method="post">
+                    @csrf
+                    {{method_field('DELETE')}}
+                    <input type="submit" class="btn btn-info pull-left" value="Sepeti Boşalt">
+                </form>
                 <a href="#" class="btn btn-success pull-right btn-lg">Ödeme Yap</a>
             @else
                 <p>Sepetinizde Ürün Yok</p>
@@ -67,4 +71,29 @@
             </div>
         </div>
     </div>
+
+
 @endsection
+<script>
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+    $('#urun-adet-artir, #urun-adet-azalt').click(function (){
+        var id = $(this).attr('data-id');
+        var adet = $(this).attr('data-adet');
+        $.ajax({
+            type:'PATCH',
+            url:'/sepet/guncelle'+id,
+            data:{adet:adet},
+            success: function (result){
+                if ((result.success)){
+                    window.location.href = '/sepet';
+                }
+
+            }
+        })
+    })
+</script>
