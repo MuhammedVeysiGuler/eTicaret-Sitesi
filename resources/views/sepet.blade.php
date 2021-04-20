@@ -86,7 +86,7 @@
         var adet = $(this).attr('data-adet');
         $.ajax({
             type:'PATCH',
-            url:'/sepet/guncelle'+id,
+            url:'/sepet/guncelle/'+id,
             data:{adet:adet},
             success: function (result){
                 if ((result.success)){
