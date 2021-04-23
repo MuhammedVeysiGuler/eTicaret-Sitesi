@@ -14,8 +14,8 @@ class CreateSepetTable extends Migration
     public function up()
     {
         Schema::create('sepet', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('kullanici_id')->unsigned();
+            $table->id();
+            $table->unsignedBigInteger('kullanici_id');
             $table->foreign('kullanici_id')->references('id')->on('kullanici')->onDelete('cascade');
             $table->softDeletes()->nullable();
             $table->timestamps();

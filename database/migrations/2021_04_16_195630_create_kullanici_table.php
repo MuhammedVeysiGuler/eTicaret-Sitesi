@@ -14,7 +14,7 @@ class CreateKullaniciTable extends Migration
     public function up()
     {
         Schema::create('kullanici', function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
             $table->string('adsoyad');
             $table->string('email')->unique();
             $table->string('sifre');

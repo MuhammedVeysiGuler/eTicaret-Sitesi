@@ -3,12 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Mail\KullaniciKayitMail;
+use App\Models\Sepet;
+use App\Models\SepetUrun;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use function PHPUnit\Framework\isNull;
+use Cart;
 
 
 class KullaniciController extends Controller
@@ -25,6 +28,7 @@ class KullaniciController extends Controller
     public function kaydol_form(){
         return view('kullanici.kaydol');
     }
+
     public function kaydol(){
         $this->validate(request(),[
            'adsoyad' => 'required|min:5|max:30',
@@ -73,6 +77,36 @@ class KullaniciController extends Controller
         ]);
         if (auth()->attempt(['email'=>\request('email'),'password'=>\request('sifre')],\request()->has('benihatirla'))){
             \request()->session()->regenerate();
+
+            $aktif_sepet_id = Sepet::firstorCreate(['kullanici_id'=>auth()->id()])->id;
+            session()->put('aktif_sepet_id',$aktif_sepet_id);
+
+            if (Cart::count()>0){
+                foreach (Cart::content() as $cartItem){
+                    $a = SepetUrun::where('sepet_id',$aktif_sepet_id)->where('urun_id',$cartItem->id)->first();
+                    if(!is_null($a)){
+                        $sepet_urun = SepetUrun::where('sepet_id',$aktif_sepet_id)->where('urun_id',$cartItem->id)->first();
+                        $sepet_urun->adet = $cartItem->qty;
+                        $sepet_urun->fiyat = $cartItem->price;
+                        $sepet_urun->durum = 'beklemede';
+                        $sepet_urun->save();
+                    }else{
+                        $sepet_urun = new SepetUrun();
+                        $sepet_urun->sepet_id = $aktif_sepet_id;
+                        $sepet_urun->urun_id = $cartItem->id;
+                        $sepet_urun->adet = $cartItem->qty;
+                        $sepet_urun->fiyat = $cartItem->price;
+                        $sepet_urun->durum = 'beklemede';
+                        $sepet_urun->save();
+                    }
+                }
+            }
+            Cart::destroy();
+            $sepetUrunler = SepetUrun::with('urun')->where('sepet_id',$aktif_sepet_id)->get();
+            foreach ($sepetUrunler as $item) {
+                Cart::add($item->urun->id,$item->urun->urun_adi,$sepet_urun->adet,$item->urun->fiyat,['slug'=>$item->urun->slug]);
+            }
+
             return redirect()->intended('/');
         }else{
             $errors = ['email'=>'Hatali Giris'];

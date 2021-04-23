@@ -14,8 +14,8 @@ class CreateUrunDetayTable extends Migration
     public function up()
     {
         Schema::create('urun_detay', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('urun_id')->unsigned()->unique();
+            $table->id();
+            $table->unsignedBigInteger('urun_id')->unique();
             $table->boolean('goster_slider')->default(0);
             $table->boolean('goster_gunun_firsati')->default(0);
             $table->boolean('goster_one_cikan')->default(0);

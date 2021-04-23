@@ -14,16 +14,16 @@ class CreateSepetUrunTable extends Migration
     public function up()
     {
         Schema::create('sepet_urun', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('sepet_id')->unsigned();
-            $table->integer('urun_id')->unsigned();
+            $table->id();
+            $table->unsignedBigInteger('sepet_id');
+            $table->unsignedBigInteger('urun_id');
             $table->integer('adet');
             $table->decimal('fiyat');
             $table->text('durum');
             $table->foreign('sepet_id')->references('id')->on('sepet')->onDelete('cascade');
             $table->foreign('urun_id')->references('id')->on('urun')->onDelete('cascade');
-            $table->softDeletes()->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

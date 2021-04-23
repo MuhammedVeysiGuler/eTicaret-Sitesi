@@ -6,8 +6,8 @@ use App\Models\Sepet;
 use App\Models\SepetUrun;
 use App\Models\Urun;
 use Cart;
+use Illuminate\Support\Facades\Auth;
 use Validator;
-use Illuminate\Auth\Events\Validated;
 use Illuminate\Http\Request;
 
 class SepetController extends Controller
@@ -15,11 +15,12 @@ class SepetController extends Controller
     public function index(){
         return view('sepet');
     }
+
     public function ekle(){
         $urun = Urun::find(\request('id'));
         $cartItem = Cart::add($urun->id,$urun->urun_adi,1,$urun->fiyat,['slug'=>$urun->slug]);
 
-        if (auth()->check()){
+        if (Auth::user()){
             $aktif_sepet_id = session('aktif_sepet_id');
             if(!isset($aktif_sepet_id)){
                 $aktif_sepet = Sepet::create([
@@ -28,13 +29,23 @@ class SepetController extends Controller
                 $aktif_sepet_id = $aktif_sepet->id;
                 session()->put('aktif_sepet_id',$aktif_sepet_id);
             }
-
-            SepetUrun::updateOrCreate([
-                ['sepet_id'=>$aktif_sepet_id, 'urun_id'=>$urun->id],
-                ['adet'=>$cartItem->qty, 'fiyat'=>$urun->fiyat, 'durum'=>'beklemede']
-            ]);
+            $a = SepetUrun::where('sepet_id',$aktif_sepet_id)->where('urun_id',$urun->id)->first();
+            if(!is_null($a)){
+                $sepet_urun = SepetUrun::where('sepet_id',$aktif_sepet_id)->where('urun_id',$urun->id)->first();
+                $sepet_urun->adet = $cartItem->qty;
+                $sepet_urun->fiyat = $urun->fiyat;
+                $sepet_urun->durum = 'beklemede';
+                $sepet_urun->save();
+            }else{
+                $sepet_urun = new SepetUrun();
+                $sepet_urun->sepet_id = $aktif_sepet_id;
+                $sepet_urun->urun_id = $urun->id;
+                $sepet_urun->adet = $cartItem->qty;
+                $sepet_urun->fiyat = $urun->fiyat;
+                $sepet_urun->durum = 'beklemede';
+                $sepet_urun->save();
+            }
         }
-
         return redirect()->route('sepet')
             ->with('mesaj_tur','success')
             ->with('mesaj','Ürün Sepete Eklendi');
@@ -42,7 +53,7 @@ class SepetController extends Controller
     }
 
     public function kaldir($rowId){
-        if (auth()->check()){
+        if (Auth::user()){
             $aktif_sepet_id = session('aktif_sepet_id');
             $cartItem = Cart::get($rowId);
             SepetUrun::where('sepet_id',$aktif_sepet_id)->where('urun_id',$cartItem->id)->delete();
@@ -74,6 +85,18 @@ class SepetController extends Controller
             session()->flash('mesaj_tur','danger');
             session()->flash('mesaj','Adet Değeri en fazla 5 olmalıdır');
             return response()->json(['success'=>true]);
+        }
+
+        if (auth()->check()){
+            $aktif_sepet_id = session('aktif_sepet_id');
+            $cartItem = Cart::get($rowId);
+            if (\request('adet')==0){
+                SepetUrun::where('sepet_id',$aktif_sepet_id)->where('urun_id',$cartItem->id)->delete();
+            }
+            else
+                SepetUrun::where('sepet_id',$aktif_sepet_id)->where('urun_id',$cartItem->id)->update([
+                    'adet' => \request('adet')
+                ]);
         }
 
         Cart::update($rowId,\request('adet'));  //scriptte data olarak gonderdik

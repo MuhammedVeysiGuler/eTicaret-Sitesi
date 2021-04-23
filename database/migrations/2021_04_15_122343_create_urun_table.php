@@ -14,7 +14,7 @@ class CreateUrunTable extends Migration
     public function up()
     {
         Schema::create('urun', function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
             $table->string('urun_adi');
             $table->string('slug');
             $table->text('aciklama');
