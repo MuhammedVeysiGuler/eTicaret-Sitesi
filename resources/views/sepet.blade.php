@@ -74,26 +74,25 @@
 
 
 @endsection
-<script>
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
 
-    $('#urun-adet-artir, #urun-adet-azalt').click(function (){
-        var id = $(this).attr('data-id');
-        var adet = $(this).attr('data-adet');
-        $.ajax({
-            type:'PATCH',
-            url:'/sepet/guncelle/'+id,
-            data:{adet:adet},
-            success: function (result){
-                if ((result.success)){
-                    window.location.href = '/sepet';
-                }
+@section('footer')
+    <script>
+        $(function (){
+            $('#urun-adet-artir, #urun-adet-azalt').click(function (){
+                var id = $(this).attr('data-id');
+                var adet = $(this).attr('data-adet');
+                $.ajax({
+                    type:'PATCH',
+                    url:'{{url('sepet/guncelle')}}/'+id,
+                    data:{adet:adet},
+                    success: function (result){
+                        if ((result.success)){
+                            window.location.href = '{{route('sepet')}}';
+                        }
+                    }
+                })
+            })
+        });
+    </script>
+@endsection
 
-            }
-        })
-    })
-</script>

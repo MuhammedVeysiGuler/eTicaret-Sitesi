@@ -23,7 +23,7 @@ Route::group(['prefix'=>'sepet'],function (){
     Route::post('/ekle',[SepetController::class,'ekle'])->name('sepet.ekle');
     Route::delete('/kaldir/{rowId}',[SepetController::class,'kaldir'])->name('sepet.kaldir');
     Route::delete('/bosalt',[SepetController::class,'bosalt'])->name('sepet.bosalt');
-    Route::patch('/guncelle',[SepetController::class,'guncelle'])->name('sepet.guncelle');
+    Route::patch('/guncelle/{rowId}',[SepetController::class,'guncelle'])->name('sepet.guncelle');
 });
 
 
