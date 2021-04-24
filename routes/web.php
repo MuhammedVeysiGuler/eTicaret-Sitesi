@@ -11,6 +11,19 @@ use \App\Http\Controllers\AnasayfaController;
 
 Route::get('/',[AnasayfaController::class,'index'])->name('anasayfa');
 
+Route::namespace('Yonetim')->group(function() {
+    Route::group(['prefix'=>'yonetim'],function (){
+        Route::redirect('/','yonetim/oturumac');
+        Route::match(['get','post'],'/oturumac',[App\Http\Controllers\Yonetim\KullaniciController::class,'oturumac'])->name('yonetim.oturumac');
+        Route::get('/oturumukapat',[App\Http\Controllers\Yonetim\KullaniciController::class,'oturumukapat'])->name('yonetim.oturumukapat');
+
+        Route::group(['middleware'=>'yonetim'],function (){
+            Route::get('/anasayfa',[App\Http\Controllers\Yonetim\AnasayfaController::class,'index'])->name('yonetim.anasayfa');
+        });
+    });
+});
+
+
 Route::get('/kategori/{slug_kategoriadi}',[KategoriController::class,'index'])->name('kategori');
 
 Route::get('/urun/{slug_urunadi}',[UrunController::class,'index'])->name('urun');

@@ -19,7 +19,8 @@ class CreateKullaniciTable extends Migration
             $table->string('email')->unique();
             $table->string('sifre');
             $table->string('aktivasyon_anahtari')->nullable();
-            $table->boolean('aktif_mi')->default(0);
+            $table->boolean('aktif_mi')->default(0)->comment('0 aktif degil || 1 aktif');
+            $table->boolean('yonetici_mi')->default(0)->comment('0 aktif degil || 1 aktif');;
             $table->rememberToken();
             $table->timestamps();
         });
