@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Mail\KullaniciKayitMail;
+use App\Models\KullaniciDetay;
 use App\Models\Sepet;
 use App\Models\SepetUrun;
-use App\Models\User;
+use App\Models\Kullanici;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
@@ -37,13 +38,14 @@ class KullaniciController extends Controller
 
         ]);
 
-        $kullanici = User::create([
+        $kullanici = Kullanici::create([
             'adsoyad' => \request('adsoyad'),
             'email' => \request('email'),
             'sifre' => Hash::make(request('sifre')),
             'aktivasyon_anahtari' =>Str::random(60),
             'aktif_mi' => 0
         ]);
+        $kullanici->detay()->save(new KullaniciDetay());
 
         Mail::to(request('email'))->send(new KullaniciKayitMail($kullanici));  //1.parametre gönderilecek mail || cc() ile gönderilecek kişilere bcc() ile gizli olan mailler
         //  2.parametredede bilgileri gönderiyorum
@@ -54,7 +56,7 @@ class KullaniciController extends Controller
     }
 
     public function aktiflestir($anahtar){
-        $kullanici = User::where('aktivasyon_anahtari',$anahtar)->first();
+        $kullanici = Kullanici::where('aktivasyon_anahtari',$anahtar)->first();
         if (!isNull($kullanici)){
             $kullanici->aktivasyon_anahtari = null;
             $kullanici->aktif_mi = 1;
@@ -78,7 +80,11 @@ class KullaniciController extends Controller
         if (auth()->attempt(['email'=>\request('email'),'password'=>\request('sifre')],\request()->has('benihatirla'))){
             \request()->session()->regenerate();
 
-            $aktif_sepet_id = Sepet::firstorCreate(['kullanici_id'=>auth()->id()])->id;
+            $aktif_sepet_id = Sepet::aktif_sepet_id();
+            if (!is_null($aktif_sepet_id)){
+                $aktif_sepet = Sepet::create(['kullanici_id',auth()->id()]);
+                $aktif_sepet_id = $aktif_sepet->id;
+            }
             session()->put('aktif_sepet_id',$aktif_sepet_id);
 
             if (Cart::count()>0){

@@ -2,7 +2,7 @@
 
 namespace App\Mail;
 
-use App\Models\User;
+use App\Models\Kullanici;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -14,7 +14,7 @@ class KullaniciKayitMail extends Mailable
 
     public $user; //tanımlanan bu değişken view içerisinde kullanılbilir.  mails.kullanici_kayit
 
-    public function __construct(User $user )
+    public function __construct(Kullanici $user )
     {
         $this->user = $user;
     }

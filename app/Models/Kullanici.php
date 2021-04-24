@@ -4,14 +4,17 @@ namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-class User extends Authenticatable
+class Kullanici extends Authenticatable
 {
     use HasFactory, Notifiable;
 
-    protected $table = "kullanici";
+    protected $table = 'kullanici';
+
+    protected $guarded = ['id'];
 
     protected $fillable = [
         'adsoyad',
@@ -35,5 +38,9 @@ class User extends Authenticatable
     public function getAuthPassword()
     {
         return $this->sifre;
+    }
+
+    public function detay(){
+        return $this->hasOne('App\Models\KullaniciDetay');
     }
 }

@@ -26,9 +26,10 @@ Route::group(['prefix'=>'sepet'],function (){
     Route::patch('/guncelle/{rowId}',[SepetController::class,'guncelle'])->name('sepet.guncelle');
 });
 
+Route::get('/odeme',[OdemeController::class,'index'])->name('odeme');
+Route::post('/odeme',[OdemeController::class,'odemeyap'])->name('odemeyap');
 
 Route::group(['middleware'=>'auth'],function (){ //sadece giriş yapmış kişilerin erişimine açık hael getirildi
-    Route::get('/odeme',[OdemeController::class,'index'])->name('odeme');
     Route::get('/siparisler',[SiparisController::class,'index'])->name('siparisler');
     Route::get('/siparisler/{id}',[SiparisController::class,'detay'])->name('siparis');
 });
@@ -44,7 +45,7 @@ Route::group(['prefix'=>'kullanici'],function (){
 });
 
 Route::get('/test/mail',function(){
-    $user = \App\Models\User::find(1);
+    $user = \App\Models\Kullanici::find(1);
     return new App\Mail\KullaniciKayitMail($user );
 });
 
