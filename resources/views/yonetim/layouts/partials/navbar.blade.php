@@ -18,7 +18,7 @@
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
                 <li>
-                    <a href="#">Home</a>
+                    <a href="{{route('yonetim.anasayfa')}}">Giriş</a>
                 </li>
                 <li>
                     <a href="#">Settings</a>

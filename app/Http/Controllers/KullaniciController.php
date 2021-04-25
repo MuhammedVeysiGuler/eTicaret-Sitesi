@@ -77,7 +77,12 @@ class KullaniciController extends Controller
            'email' => 'required|email|',
             'sifre' => 'required'
         ]);
-        if (auth()->attempt(['email'=>\request('email'),'password'=>\request('sifre')],\request()->has('benihatirla'))){
+        $crendetials = [
+            'email'=>\request('email'),
+            'password'=>\request('sifre'),
+            'aktif_mi'=> 1
+        ];
+        if (auth()->attempt($crendetials,\request()->has('benihatirla'))){
             \request()->session()->regenerate();
 
             $aktif_sepet_id = Sepet::aktif_sepet_id();

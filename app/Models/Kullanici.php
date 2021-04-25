@@ -22,6 +22,7 @@ class Kullanici extends Authenticatable
         'sifre',
         'aktivasyon_anahtari',
         'aktif_mi',
+        'yonetici_mi',
     ];
 
 
@@ -41,6 +42,6 @@ class Kullanici extends Authenticatable
     }
 
     public function detay(){
-        return $this->hasOne('App\Models\KullaniciDetay');
+        return $this->hasOne('App\Models\KullaniciDetay')->withDefault();
     }
 }
