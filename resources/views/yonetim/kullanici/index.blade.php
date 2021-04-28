@@ -31,9 +31,13 @@
                 <th>Aktfi Mi</th>
                 <th>Yönetici Mi</th>
                 <th>Kayıt Tarihi</th>
+                <th></th>
             </tr>
             </thead>
             <tbody>
+            @if(count($list)==0)
+                <tr><td colspan="7" class="text-center">Kayıt Bulunamadı</td></tr>
+            @endif
             @foreach($list as $l)
             <tr>
                 <td>{{$l->id}}</td>

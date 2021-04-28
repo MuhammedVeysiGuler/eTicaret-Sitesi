@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Kullanici;
 use App\Models\KullaniciDetay;
 use Illuminate\Http\Request;
-use   Auth;
+use Auth;
 use Illuminate\Support\Facades\Hash;
 
 class KullaniciController extends Controller
@@ -18,8 +18,10 @@ class KullaniciController extends Controller
             $list = Kullanici::where('adsoyad','like',"%$aranan%")
                 ->orWhere('email','like', "%$aranan%")
                 ->orderbyDesc('created_at')
-                ->paginate(8);
+                ->paginate(8)
+                ->appends(['aranan'=>$aranan]);
         }else{
+            \request()->flush();
             $list = Kullanici::orderByDesc('created_at')->paginate(8);
         }
         return view('yonetim.kullanici.index',compact('list'));
