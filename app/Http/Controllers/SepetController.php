@@ -61,7 +61,7 @@ class SepetController extends Controller
 
         Cart::remove($rowId);
         return redirect()->route('sepet')
-            ->with('mesaj_tur','success')
+            ->with('mesaj_tur','info')
             ->with('mesaj','Ürün Sepetten Kaldırıldı');
     }
 
@@ -74,7 +74,7 @@ class SepetController extends Controller
         Cart::destroy();
         return redirect()->route('sepet')
             ->with('mesaj_tur','success')
-            ->with('mesaj','Sepet   Boşaltıldı');
+            ->with('mesaj','Sepet Boşaltıldı');
     }
 
     public function guncelle($rowId){
@@ -101,7 +101,7 @@ class SepetController extends Controller
 
         Cart::update($rowId,\request('adet'));  //scriptte data olarak gonderdik
         session()->flash('mesaj_tur','success');
-        session()->flash('mesaj','Adet bilgisi Güncellendi');
+        session()->flash('mesaj','Adet bilgisi güncellendi');
         return response()->json(['success'=>true]);
     }
 

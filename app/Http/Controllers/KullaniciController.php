@@ -63,12 +63,12 @@ class KullaniciController extends Controller
             $kullanici->save();
             return redirect()->to('/')
                 ->with('mesaj','Kaydınız Aktifleştirildi')
-                ->with('mesaj_turu','success');
+                ->with('mesaj_tur','success');
         }
         else{
             return redirect()->to('/')
                 ->with('mesaj','Kullanıcı kaydınız aktifleştirilemedi')
-                ->with('mesaj_turu','warning');
+                ->with('mesaj_tur','warning');
         }
     }
 
