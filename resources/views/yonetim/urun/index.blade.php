@@ -26,6 +26,7 @@
             <thead class="thead-dark">
             <tr>
                 <th>#</th>
+                <th>Resim</th>
                 <th>Ürün Adı</th>
                 <th>Ürün Açıklama</th>
                 <th>Ürün Fiyatı</th>
@@ -41,6 +42,10 @@
             @foreach($list as $l)
             <tr>
                 <td>{{$l->id}}</td>
+                <td>
+                    <img src="{{$l->getUrunDetay->urun_resmi != null ? asset('/urun-resimleri/urunler/'.$l->getUrunDetay->urun_resmi) :
+                'https://via.placeholder.com/120x120?text=Resim Bulunamadı'}}" style="width: 120px" class="img-responsive">
+                </td>
                 <td>{{$l->urun_adi}}</td>
                 <td>{{$l->aciklama}}</td>
                 <td>{{$l->fiyat}}</td>

@@ -13,7 +13,8 @@ class UrunDetay extends Model
     public $timestamps = false;
     protected $guarded = [];
 
-    public function urun(){
+    public function urun()
+    {
         return $this->belongsTo('App\Models\Urun');
     }
 

@@ -12,14 +12,15 @@
                     <div class="panel-heading">{{$kategori->kategori_adi}}</div>
                     <div class="panel-body">
                         @if(count($alt_kategoriler)>0)
-                        <h3>Alt Kategoriler</h3>
-                        <div class="list-group categories">
-                           @foreach($alt_kategoriler as $alt_kategori)
-                            <a href="{{route('kategori',$alt_kategori->slug)}}" class="list-group-item"><i class="fa fa-television"></i>{{$alt_kategori->kategori_adi}}</a>
-                            @endforeach
-                        </div>
+                            <h3>Alt Kategoriler</h3>
+                            <div class="list-group categories">
+                                @foreach($alt_kategoriler as $alt_kategori)
+                                    <a href="{{route('kategori',$alt_kategori->slug)}}" class="list-group-item"><i
+                                            class="fa fa-television"></i>{{$alt_kategori->kategori_adi}}</a>
+                                @endforeach
+                            </div>
                         @else
-                        <div class="col-md-12">Bu Kategoride Baska Alt Kategori Bulunmamaktadır</div>
+                            <div class="col-md-12">Bu Kategoride Baska Alt Kategori Bulunmamaktadır</div>
                         @endif
                     </div>
                 </div>
@@ -27,10 +28,10 @@
             <div class="col-md-9">
                 <div class="products bg-content">
                     @if(count($urunler)>0)
-                    Sırala
-                    <a href="?order=coksatanlar" class="btn btn-default">Çok Satanlar</a>
-                    <a href="?order=yeniurunler" class="btn btn-default">Yeni Ürünler</a>
-                    <hr>
+                        Sırala
+                        <a href="?order=coksatanlar" class="btn btn-default">Çok Satanlar</a>
+                        <a href="?order=yeniurunler" class="btn btn-default">Yeni Ürünler</a>
+                        <hr>
                     @endif
                     <div class="row">
                         @if(count($urunler)==0)
@@ -38,12 +39,12 @@
                         @endif
 
                         @foreach($urunler as $urun)
-                        <div class="col-md-3 product">
-                            <a href="{{route('urun',$urun->slug )}}"><img src="https://picsum.photos/400/400"></a>
-                            <p><a href="{{route('urun',$urun->slug )}}">{{$urun->urun_adi}}</a></p>
-                            <p class="price">{{$urun->fiyat}} ₺</p>
-                            <p><a href="#" class="btn btn-theme">Sepete Ekle</a></p>
-                        </div>
+                            <div class="col-md-3 product">
+                                <a href="{{route('urun',$urun->slug )}}"><img src="https://picsum.photos/400/400"></a>
+                                <p><a href="{{route('urun',$urun->slug )}}">{{$urun->urun_adi}}</a></p>
+                                <p class="price">{{$urun->fiyat}} ₺</p>
+                                <p><a href="#" class="btn btn-theme">Sepete Ekle</a></p>
+                            </div>
                         @endforeach
                     </div>
                     {{request()->has('order') ? $urunler->appends(['order' => request('order')]) :  $urunler->links()}}

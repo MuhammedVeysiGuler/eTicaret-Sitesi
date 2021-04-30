@@ -10,14 +10,17 @@ class Urun extends Model
 {
     use HasFactory;
     use SoftDeletes;
+
     protected $table = 'urun';
     protected $guarded = [];
 
-    public function kategoriler(){
-        return $this->belongsToMany('App\Models\Kategori','kategori_urun');
+    public function kategoriler()
+    {
+        return $this->belongsToMany('App\Models\Kategori', 'kategori_urun');
     }
 
-    public function getUrunDetay(){
+    public function getUrunDetay()
+    {
         return $this->hasOne('App\Models\UrunDetay')->withDefault();
     }
 }

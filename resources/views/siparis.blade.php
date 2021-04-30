@@ -13,7 +13,7 @@
                     <th>Durum</th>
                 </tr>
                 <tr>
-                    <td> <img src="https://picsum.photos/120/100"> Ürün adı</td>
+                    <td><img src="https://picsum.photos/120/100"> Ürün adı</td>
                     <td>18.99</td>
                     <td>1</td>
                     <td>18.99</td>

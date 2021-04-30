@@ -15,29 +15,31 @@
                     </tr>
                     @foreach(Cart::content() as $urunCartItem)
                         <tr>
-                        <td>
-                            <a href="{{route('urun',$urunCartItem->options->slug)}}">
-                                <img src="https://picsum.photos/120/100">
-                            </a>
-                        </td>
-                        <td>
-                            <a href="{{route('urun',$urunCartItem->options->slug)}}">
-                                {{$urunCartItem->name}}
-                            </a>
+                            <td>
+                                <a href="{{route('urun',$urunCartItem->options->slug)}}">
+                                    <img src="https://picsum.photos/120/100">
+                                </a>
+                            </td>
+                            <td>
+                                <a href="{{route('urun',$urunCartItem->options->slug)}}">
+                                    {{$urunCartItem->name}}
+                                </a>
 
-                            <form action="{{route('sepet.kaldir',$urunCartItem->rowId)}}" method="post">
-                                @csrf
-                                {{method_field('DELETE')}}
-                                <input type="submit" class="btn btn-danger btn-xs" value="Sepetten Kaldır">
-                            </form>
-                        </td>
+                                <form action="{{route('sepet.kaldir',$urunCartItem->rowId)}}" method="post">
+                                    @csrf
+                                    {{method_field('DELETE')}}
+                                    <input type="submit" class="btn btn-danger btn-xs" value="Sepetten Kaldır">
+                                </form>
+                            </td>
 
 
                             <td>{{$urunCartItem->price}}</td>
                             <td>
-                                <a href="#" class="btn btn-xs btn-default" id="urun-adet-azalt" data-id ="{{$urunCartItem->rowId}}" data-adet="{{$urunCartItem->qty-1}}">-</a>
+                                <a href="#" class="btn btn-xs btn-default" id="urun-adet-azalt"
+                                   data-id="{{$urunCartItem->rowId}}" data-adet="{{$urunCartItem->qty-1}}">-</a>
                                 <span style="padding: 10px 20px">{{$urunCartItem->qty}}</span>
-                                <a href="#" class="btn btn-xs btn-default " id="urun-adet-artir" data-id ="{{$urunCartItem->rowId}}" data-adet="{{$urunCartItem->qty+1}}">+</a>
+                                <a href="#" class="btn btn-xs btn-default " id="urun-adet-artir"
+                                   data-id="{{$urunCartItem->rowId}}" data-adet="{{$urunCartItem->qty+1}}">+</a>
                             </td>
                             <td class="text-right">
                                 {{$urunCartItem->subtotal}}
@@ -53,7 +55,7 @@
                         <td class="text-right">{{Cart::tax()}}</td>
                     </tr>
                     <tr>
-                        <th colspan="4" class="text-right">Genel Toplam </th>
+                        <th colspan="4" class="text-right">Genel Toplam</th>
                         <td class="text-right">{{Cart::total()}}</td>
                     </tr>
                 </table>
@@ -77,16 +79,16 @@
 
 @section('footer')
     <script>
-        $(function (){
-            $('#urun-adet-artir, #urun-adet-azalt').click(function (){
+        $(function () {
+            $('#urun-adet-artir, #urun-adet-azalt').click(function () {
                 var id = $(this).attr('data-id');
                 var adet = $(this).attr('data-adet');
                 $.ajax({
-                    type:'PATCH',
-                    url:'{{url('sepet/guncelle')}}/'+id,
-                    data:{adet:adet},
-                    success: function (result){
-                        if ((result.success)){
+                    type: 'PATCH',
+                    url: '{{url('sepet/guncelle')}}/' + id,
+                    data: {adet: adet},
+                    success: function (result) {
+                        if ((result.success)) {
                             window.location.href = '{{route('sepet')}}';
                         }
                     }

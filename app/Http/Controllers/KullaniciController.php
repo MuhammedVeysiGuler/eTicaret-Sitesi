@@ -22,19 +22,22 @@ class KullaniciController extends Controller
         $this->middleware('guest')->except('oturumukapat');
     }
 
-    public function giris_form(){
+    public function giris_form()
+    {
         return view('kullanici.oturumac');
     }
 
-    public function kaydol_form(){
+    public function kaydol_form()
+    {
         return view('kullanici.kaydol');
     }
 
-    public function kaydol(){
-        $this->validate(request(),[
-           'adsoyad' => 'required|min:5|max:30',
-           'email' => 'required|email|unique:kullanici', //kullanıcı tablosundan email i kontrol eder aynısı varsa hata verir
-           'sifre' => 'required|confirmed|min:6|max:12',  //şifre tekrar kısmında şifrenin key'i ne ise onun sonuna confirmed ekler oto olarak  sifre(asıl sifre) - sifre-confirmed(tekrar olan)
+    public function kaydol()
+    {
+        $this->validate(request(), [
+            'adsoyad' => 'required|min:5|max:30',
+            'email' => 'required|email|unique:kullanici', //kullanıcı tablosundan email i kontrol eder aynısı varsa hata verir
+            'sifre' => 'required|confirmed|min:6|max:12',  //şifre tekrar kısmında şifrenin key'i ne ise onun sonuna confirmed ekler oto olarak  sifre(asıl sifre) - sifre-confirmed(tekrar olan)
 
         ]);
 
@@ -42,7 +45,7 @@ class KullaniciController extends Controller
             'adsoyad' => \request('adsoyad'),
             'email' => \request('email'),
             'sifre' => Hash::make(request('sifre')),
-            'aktivasyon_anahtari' =>Str::random(60),
+            'aktivasyon_anahtari' => Str::random(60),
             'aktif_mi' => 0
         ]);
         $kullanici->detay()->save(new KullaniciDetay());
@@ -55,53 +58,54 @@ class KullaniciController extends Controller
 
     }
 
-    public function aktiflestir($anahtar){
-        $kullanici = Kullanici::where('aktivasyon_anahtari',$anahtar)->first();
-        if (!isNull($kullanici)){
+    public function aktiflestir($anahtar)
+    {
+        $kullanici = Kullanici::where('aktivasyon_anahtari', $anahtar)->first();
+        if (!isNull($kullanici)) {
             $kullanici->aktivasyon_anahtari = null;
             $kullanici->aktif_mi = 1;
             $kullanici->save();
             return redirect()->to('/')
-                ->with('mesaj','Kaydınız Aktifleştirildi')
-                ->with('mesaj_tur','success');
-        }
-        else{
+                ->with('mesaj', 'Kaydınız Aktifleştirildi')
+                ->with('mesaj_tur', 'success');
+        } else {
             return redirect()->to('/')
-                ->with('mesaj','Kullanıcı kaydınız aktifleştirilemedi')
-                ->with('mesaj_tur','warning');
+                ->with('mesaj', 'Kullanıcı kaydınız aktifleştirilemedi')
+                ->with('mesaj_tur', 'warning');
         }
     }
 
-    public function giris(){
-        $this->validate(\request(),[
-           'email' => 'required|email|',
+    public function giris()
+    {
+        $this->validate(\request(), [
+            'email' => 'required|email|',
             'sifre' => 'required'
         ]);
         $crendetials = [
-            'email'=>\request('email'),
-            'password'=>\request('sifre'),
-            'aktif_mi'=> 1
+            'email' => \request('email'),
+            'password' => \request('sifre'),
+            'aktif_mi' => 1
         ];
-        if (auth()->attempt($crendetials,\request()->has('benihatirla'))){
+        if (auth()->attempt($crendetials, \request()->has('benihatirla'))) {
             \request()->session()->regenerate();
 
             $aktif_sepet_id = Sepet::aktif_sepet_id();
-            if (!is_null($aktif_sepet_id)){
-                $aktif_sepet = Sepet::create(['kullanici_id',auth()->id()]);
+            if (!is_null($aktif_sepet_id)) {
+                $aktif_sepet = Sepet::create(['kullanici_id', auth()->id()]);
                 $aktif_sepet_id = $aktif_sepet->id;
             }
-            session()->put('aktif_sepet_id',$aktif_sepet_id);
+            session()->put('aktif_sepet_id', $aktif_sepet_id);
 
-            if (Cart::count()>0){
-                foreach (Cart::content() as $cartItem){
-                    $a = SepetUrun::where('sepet_id',$aktif_sepet_id)->where('urun_id',$cartItem->id)->first();
-                    if(!is_null($a)){
-                        $sepet_urun = SepetUrun::where('sepet_id',$aktif_sepet_id)->where('urun_id',$cartItem->id)->first();
+            if (Cart::count() > 0) {
+                foreach (Cart::content() as $cartItem) {
+                    $a = SepetUrun::where('sepet_id', $aktif_sepet_id)->where('urun_id', $cartItem->id)->first();
+                    if (!is_null($a)) {
+                        $sepet_urun = SepetUrun::where('sepet_id', $aktif_sepet_id)->where('urun_id', $cartItem->id)->first();
                         $sepet_urun->adet = $cartItem->qty;
                         $sepet_urun->fiyat = $cartItem->price;
                         $sepet_urun->durum = 'beklemede';
                         $sepet_urun->save();
-                    }else{
+                    } else {
                         $sepet_urun = new SepetUrun();
                         $sepet_urun->sepet_id = $aktif_sepet_id;
                         $sepet_urun->urun_id = $cartItem->id;
@@ -113,25 +117,25 @@ class KullaniciController extends Controller
                 }
             }
             Cart::destroy();
-            $sepetUrunler = SepetUrun::with('urun')->where('sepet_id',$aktif_sepet_id)->get();
+            $sepetUrunler = SepetUrun::with('urun')->where('sepet_id', $aktif_sepet_id)->get();
             foreach ($sepetUrunler as $item) {
-                Cart::add($item->urun->id,$item->urun->urun_adi,$sepet_urun->adet,$item->urun->fiyat,['slug'=>$item->urun->slug]);
+                Cart::add($item->urun->id, $item->urun->urun_adi, $sepet_urun->adet, $item->urun->fiyat, ['slug' => $item->urun->slug]);
             }
 
             return redirect()->intended('/');
-        }else{
-            $errors = ['email'=>'Hatali Giris'];
+        } else {
+            $errors = ['email' => 'Hatali Giris'];
             return back()->withErrors($errors);
         }
     }
 
-    public function oturumukapat(){
+    public function oturumukapat()
+    {
         auth()->logout();
         \request()->session()->flush(); //sessiondaki bilgileri sıfırlamak için kullanılır
         \request()->session()->regenerate();
         return redirect()->route('anasayfa');
     }
-
 
 
 }

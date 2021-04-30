@@ -1,15 +1,15 @@
 html {
-	height: 100%;
+    height: 100%;
 }
 
 body {
     padding-top: 50px;
     padding-bottom: 40px;
     background: #ffffff; /* Old browsers */
-	background: -moz-radial-gradient(center, ellipse cover, #ffffff 0%, #c1c1c1 100%); /* FF3.6-15 */
-	background: -webkit-radial-gradient(center, ellipse cover, #ffffff 0%,#c1c1c1 100%); /* Chrome10-25,Safari5.1-6 */
-	background: radial-gradient(ellipse at center, #ffffff 0%,#c1c1c1 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#c1c1c1',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+    background: -moz-radial-gradient(center, ellipse cover, #ffffff 0%, #c1c1c1 100%); /* FF3.6-15 */
+    background: -webkit-radial-gradient(center, ellipse cover, #ffffff 0%, #c1c1c1 100%); /* Chrome10-25,Safari5.1-6 */
+    background: radial-gradient(ellipse at center, #ffffff 0%, #c1c1c1 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#c1c1c1', GradientType=1); /* IE6-9 fallback on horizontal gradient */
 }
 
 .form-signin {
@@ -23,7 +23,9 @@ body {
 }
 
 .form-signin img {
-    display: block; margin: 0 auto; margin-bottom: 14px;
+    display: block;
+    margin: 0 auto;
+    margin-bottom: 14px;
     border-radius: 6px;
 }
 

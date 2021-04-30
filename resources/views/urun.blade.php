@@ -5,7 +5,7 @@
         <ol class="breadcrumb">
             <li><a href="{{route('anasayfa')}}">Anasayfa</a></li>
             @foreach($urun->kategoriler()->distinct()->get( ) as $kategori)
-            <li><a href="{{route('kategori',$kategori->slug)}}">{{$kategori->kategori_adi}}</a></li>
+                <li><a href="{{route('kategori',$kategori->slug)}}">{{$kategori->kategori_adi}}</a></li>
             @endforeach
             <li class="active">{{$urun->urun_adi}}</li>
         </ol>
