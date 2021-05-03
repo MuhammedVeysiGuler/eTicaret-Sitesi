@@ -29,7 +29,7 @@ class SepetController extends Controller
                 $aktif_sepet_id = $aktif_sepet->id;
                 session()->put('aktif_sepet_id',$aktif_sepet_id);
             }
-            $a = SeetUrun::where('sepet_id',$aktif_sepet_id)->where('urun_id',$urun->id)->first();
+            $a = SepetUrun::where('sepet_id',$aktif_sepet_id)->where('urun_id',$urun->id)->first();
             if(!is_null($a)){
                 $sepet_urun = SepetUrun::where('sepet_id', $aktif_sepet_id)->where('urun_id', $urun->id)->first();
                 $sepet_urun->adet = $cartItem->qty;

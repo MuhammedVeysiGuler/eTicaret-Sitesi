@@ -117,8 +117,9 @@
         $(function () {
             $('#kategoriler').select2({
                 placeholder: 'Kategori Seçiniz '
-            })
-        })
+            });
+        });
     </script>
+
 @endsection
 

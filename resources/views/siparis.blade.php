@@ -3,45 +3,51 @@
 @section('content')
     <div class="container">
         <div class="bg-content">
-            <h2>Sipariş (SP-00123)</h2>
+            <a href="{{route('siparisler')}}" class="btn btn-xs btn-primary">
+                <i class="glyphicon glyphicon-arrow-left">Siparişler</i>
+            </a>
+            <h2>Sipariş (SP-{{$siparis->id}})</h2>
             <table class="table table-bordererd table-hover">
                 <tr>
-                    <th>Ürün</th>
+                    <th colspan="2">Ürün</th>
                     <th>Tutar</th>
                     <th>Adet</th>
                     <th>Ara Toplam</th>
                     <th>Durum</th>
                 </tr>
+                @foreach($siparis->sepet->sepet_urunler as $s)
+                    <tr>
+                        <td>
+                            <a href="{{route('urun',$s->urun->slug)}}">
+                                <img src="{{$s->urun->getUrunDetay->urun_resmi != null ? asset('/urun-resimleri/urunler/'.$s->urun->getUrunDetay->urun_resmi) :
+                'https://via.placeholder.com/120x100?text=Resim Bulunamadı'}}" style="width: 140px;">
+                                <img src="https://picsum.photos/120/100" style="width: 120px">
+                            </a>
+                        </td>
+                        <td>
+                            <a href="{{route('urun',$s->urun->slug)}}">
+                                {{$s->urun->urun_adi}}
+                            </a>
+                        </td>
+                        <td>{{$s->fiyat}}</td>
+                        <td>{{$s->adet}}</td>
+                        <td>{{$s->fiyat * $s->adet}}</td>
+                        <td>{{$s->durum}}</td>
+                    </tr>
+                @endforeach
                 <tr>
-                    <td><img src="https://picsum.photos/120/100"> Ürün adı</td>
-                    <td>18.99</td>
-                    <td>1</td>
-                    <td>18.99</td>
-                    <td>
-                        Sipariş alındı, <br> Onaylandı, <br> Kargoya verildi, <br> Bir sorun var. İletişime geçin!
-                    </td>
+                    <th colspan="4" class="text-right">Toplam Tutar</th>
+                    <td colspan="2">{{$siparis->siparis_tutari}}</td>
                 </tr>
                 <tr>
-                    <th></th>
-                    <th></th>
-                    <th>Toplam Tutar (KDV Dahil)</th>
-                    <th>18.99</th>
-                    <th></th>
+                    <th colspan="4" class="text-right">Toplam Tutar(KDV dahil)</th>
+                    <td colspan="2">{{$siparis->siparis_tutari * ((100+config('cart.tax'))/100)}}</td>
                 </tr>
                 <tr>
-                    <th></th>
-                    <th></th>
-                    <th>Kargo</th>
-                    <th>Ücretsiz</th>
-                    <th></th>
+                    <th colspan="4" class="text-right">Sipariş Durumu</th>
+                    <td colspan="2">{{$siparis->durum}}</td>
                 </tr>
-                <tr>
-                    <th></th>
-                    <th></th>
-                    <th>Sipariş Toplamı</th>
-                    <th>18.99</th>
-                    <th></th>
-                </tr>
+
 
             </table>
         </div>

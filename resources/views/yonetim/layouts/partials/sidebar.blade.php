@@ -15,7 +15,7 @@
         <span class="fa fa-fw fa-dashboard"></span> Kullanıcılar
         <span class="badge badge-dark badge-pill pull-right">14</span>
     </a>
-    <a href="#" class="list-group-item">
+    <a href="{{route('yonetim.siparis')}}" class="list-group-item">
         <span class="fa fa-fw fa-dashboard"></span> Siparişler
         <span class="badge badge-dark badge-pill pull-right">14</span>
     </a>

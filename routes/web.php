@@ -45,6 +45,14 @@ Route::namespace('Yonetim')->group(function () {
                 Route::get('/sil/{id}', [App\Http\Controllers\Yonetim\UrunController::class, 'sil'])->name('yonetim.urun.sil');
             });
 
+            Route::group(['prefix' => 'siparis'], function () {
+                Route::match(['get', 'post'], '/', [App\Http\Controllers\Yonetim\SiparisController::class, 'index'])->name('yonetim.siparis');
+                Route::get('/yeni', [App\Http\Controllers\Yonetim\SiparisController::class, 'form'])->name('yonetim.siparis.yeni');
+                Route::get('/duzenle/{id}', [App\Http\Controllers\Yonetim\SiparisController::class, 'form'])->name('yonetim.siparis.duzenle');
+                Route::post('/kaydet/{id?}', [App\Http\Controllers\Yonetim\SiparisController::class, 'kaydet'])->name('yonetim.siparis.kaydet');
+                Route::get('/sil/{id}', [App\Http\Controllers\Yonetim\SiparisController::class, 'sil'])->name('yonetim.siparis.sil');
+            });
+
         });
     });
 });
