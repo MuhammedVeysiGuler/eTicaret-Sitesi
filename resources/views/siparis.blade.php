@@ -21,7 +21,6 @@
                             <a href="{{route('urun',$s->urun->slug)}}">
                                 <img src="{{$s->urun->getUrunDetay->urun_resmi != null ? asset('/urun-resimleri/urunler/'.$s->urun->getUrunDetay->urun_resmi) :
                 'https://via.placeholder.com/120x100?text=Resim Bulunamadı'}}" style="width: 140px;">
-                                <img src="https://picsum.photos/120/100" style="width: 120px">
                             </a>
                         </td>
                         <td>
