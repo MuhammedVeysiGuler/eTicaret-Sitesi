@@ -52,7 +52,12 @@
             </div>
         </div>
         <div class="col-sm-6">
-
+            <div class="panel panel-primary">
+                <div class="panel-heading">Aylara Göre Satışlar</div>
+                <div class="panel-body">
+                    <canvas id="chartAylaraGoreSatislar"></canvas>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -72,20 +77,57 @@
                 $data .= "$a->adet,";
             }
         @endphp
-        var ctx = document.getElementById('chartCokSatan').getContext('2d');
-        var chartCokSatan = new Chart(ctx, {
+        var ctx1 = document.getElementById('chartCokSatan').getContext('2d');
+        var chartCokSatan = new Chart(ctx1, {
             type: 'bar',
             data: {
                 labels: [{!! $labels !!}],
                 datasets: [{
                     label: 'Çok Satan Ürünler',
                     data: [{!! $data !!}],
-                    borderColor: 'rgb(255,99,132)',
+                    borderColor: '#0E31E2',
                     borderWidth: 1
                 }]
             },
             options: {
                 indexAxis: 'y',
+                plugins: {
+                    legend: {
+                        display: false,
+                    }
+                },
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        stepSize: 1,
+
+                    }
+                }
+            }
+        });
+
+
+        @php
+            $labels = "";
+            $data = "";
+            foreach ($aylara_gore_satislar as $a){
+                $labels .= "\"$a->ay\",";
+                $data .= "$a->adet,";
+            }
+        @endphp
+        var ctx2 = document.getElementById('chartAylaraGoreSatislar').getContext('2d');
+        var chartAylaraGoreSatislar = new Chart(ctx2, {
+            type: 'bar',
+            data: {
+                labels: [{!! $labels !!}],
+                datasets: [{
+                    label: 'Aylara Göre Satışlar',
+                    data: [{!! $data !!}],
+                    borderColor: 'rgb(14,49,226)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
                 plugins: {
                     legend: {
                         display: false,

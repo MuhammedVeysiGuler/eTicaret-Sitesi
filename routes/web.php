@@ -28,7 +28,6 @@ Route::namespace('Yonetim')->group(function () {
                 Route::get('/sil/{id}', [App\Http\Controllers\Yonetim\KullaniciController::class, 'sil'])->name('yonetim.kullanici.sil');
             });
 
-
             Route::group(['prefix' => 'kategori'], function () {
                 Route::match(['get', 'post'], '/', [App\Http\Controllers\Yonetim\KategoriController::class, 'index'])->name('yonetim.kategori');
                 Route::get('/yeni', [App\Http\Controllers\Yonetim\KategoriController::class, 'form'])->name('yonetim.kategori.yeni');

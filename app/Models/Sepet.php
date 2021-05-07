@@ -26,10 +26,10 @@ class Sepet extends Model
 
     public function aktif_sepet_id()
     {
-        $aktif_sepet = DB::table('seper as s')
+        $aktif_sepet = DB::table('sepet as s')
             ->leftJoin('siparis as si', 'si.sepet_id', '=', 's.id')
             ->where('s.kullanici_id', auth()->id())
-            ->whereRaw('si.id is null')->orderByDesc('s.created-at')
+            ->whereRaw('si.id is null')->orderByDesc('s.created_at')
             ->select('s.id')->first();
         if (!is_null($aktif_sepet)) return $aktif_sepet->id;
     }

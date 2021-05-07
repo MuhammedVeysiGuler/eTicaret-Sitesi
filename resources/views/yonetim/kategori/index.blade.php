@@ -3,7 +3,7 @@
 @section('content')
     <h1>KATEGORİ YÖNETİMİ</h1>
 
-    <h3 class="sub-header">Kullanıcı Listesi</h3>
+    <h3 class="sub-header">Kategori Listesi</h3>
     <div class="well">
         <div class="btn-group pull-right" role="group" aria-label="Basic example">
             <a href="{{route('yonetim.kategori.yeni')}}" class="btn btn-primary">Yeni Kayıt</a>

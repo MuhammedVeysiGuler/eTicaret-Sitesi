@@ -26,7 +26,7 @@
                     <div class="carousel-inner" role="listbox">
                         @foreach($urunler_slider as $index => $urun)
                             <div class="item {{$index == 0 ? 'active' : ''}}">
-                                <img src="https://picsum.photos/640/400" alt="...">
+                                <img src="https://via.placeholder.com/640x400?text=Resim Bulunamadı" alt="...">
                                 <div class="carousel-caption">
                                     {{$urun->urun_adi}}
                                 </div>
@@ -49,7 +49,7 @@
                     <div class="panel-body">
                         <a href="{{route('urun',$urun_gunun_firsati->slug)}}">
                             <img src="{{$urun_gunun_firsati->getUrunDetay->urun_resmi != null ? asset('/urun-resimleri/urunler/'.$urun_gunun_firsati->getUrunDetay->urun_resmi) :
-                'https://via.placeholder.com/640x400?text=Resim Bulunamadı'}}" style="min-width: 100%"
+                'https://via.placeholder.com/400x430?text=Resim Bulunamadı'}}" style="min-width: 100%"
                                  class="img-responsive">
                             {{$urun_gunun_firsati->urun_adi}}
                         </a>

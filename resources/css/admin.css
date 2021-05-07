@@ -66,7 +66,7 @@ body {
 .nav-sidebar > .active > a:hover,
 .nav-sidebar > .active > a:focus {
     color: #fff;
-    background-color: #428bca;
+    background-color: #9f80d7;
 }
 
 /*
@@ -109,29 +109,29 @@ body {
 }
 
 .list-group-item.active, .list-group-item.active:focus, .btn-primary {
-    background-color: #f4645f;
-    border-color: #f4645f;
+    background-color: #9f80d7;
+    border-color: #9f80d7;
 }
 
 .list-group-item:hover, .btn-primary:hover, .btn-primary:active, .btn-primary:focus {
-    background-color: #e74430 !important;
-    border-color: #e74430 !important;
+    background-color: #9f80d7 !important;
+    border-color: #9f80d7 !important;
     color: #fff !important;
 }
 
 .list-group-item:hover .badge {
     background-color: #fff;
-    color: #e74430
+    color: #9f80d7
 }
 
 .panel-primary {
-    border-color: #f4645f;
+    border-color: #9f80d7;
 }
 
 .panel-primary > .panel-heading {
     color: #fff;
-    background-color: #f4645f;
-    border-color: #f4645f;
+    background-color: #9f80d7;
+    border-color: #9f80d7;
 }
 
 .navbar-toggle {

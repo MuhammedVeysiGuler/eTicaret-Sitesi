@@ -94,7 +94,7 @@ a {
 }
 
 #profile-page .nav-tabs li.active a {
-    border-bottom: 3px solid #ff6600;
+    border-bottom: 3px solid #9f80d7;
 }
 
 #profile-page .tab-content .tab-pane {
@@ -129,7 +129,7 @@ a {
     background-color: initial;
     border: 0;
     color: inherit;
-    border-left: 3px solid #ff6600;
+    border-left: 3px solid #9f80d7;
 }
 
 .select2-selection__rendered,
@@ -174,7 +174,7 @@ a {
     color: #333;
     font-weight: 600;
     border-color: #ddd;
-    border-top: 2px solid #e52d04;
+    border-top: 2px solid #9f80d7;
     background: linear-gradient(to bottom, #fff 0%, #dfdfdf 100%);
 }
 
@@ -186,12 +186,12 @@ a {
 
 #commerce .badge-theme {
     font-weight: 400;
-    background-color: #e52d04;
+    background-color: #9f80d7;
     margin-top: -15px;
 }
 
 #commerce .btn-theme {
-    background-color: #e52d04;
+    background-color: #9f80d7;
     color: #fff;
 }
 
@@ -258,7 +258,7 @@ a {
     font-weight: 600;
     border-bottom: inherit;
     margin-top: 1px;
-    border-top: 2px solid #e52d04;
+    border-top: 2px solid #9f80d7;
     background: linear-gradient(to top, #fff 0%, #dfdfdf 100%);
 }
 

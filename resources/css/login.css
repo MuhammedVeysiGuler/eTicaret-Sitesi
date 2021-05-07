@@ -69,12 +69,12 @@ body {
 }
 
 .form-signin .btn-primary {
-    background-color: #f4645f;
-    border-color: #f4645f;
+    background-color: #9f80d7;
+    border-color: #9f80d7;
 }
 
 .form-signin .btn-primary:hover {
-    background-color: #e74430 !important;
-    border-color: #e74430 !important;
+    background-color: #9f80d7 !important;
+    border-color: #9f80d7 !important;
     color: #fff !important;
 }
