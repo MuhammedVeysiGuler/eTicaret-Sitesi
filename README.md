@@ -1,5 +1,4 @@
 # Laravel eTicaret Sitesi
-<b>Udemy kurslarından yardım alınarak tamamlanmıştır</b><br>
 <b>Mysql Kullanılmıştır</b><br>
 
 # AÇIKLAMA
